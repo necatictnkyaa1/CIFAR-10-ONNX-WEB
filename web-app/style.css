@@ -1,0 +1,252 @@
+*{
+    margin: 0; /*bütün boşlukları sıfırlar*/
+    padding: 0; /*bütün iç boşlukları sıfırlar*/
+    box-sizing: border-box; /*genişlik hesaplamasını düzeltiyor*/
+}
+
+body{
+    font-family: "Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+    line-height: 1.6; /*satır yüksekliği*/
+    color: #333;/*Koyu gri #333 */
+    background: linear-gradient(135deg,#667eea 0%, #764ba2); /*Mavi-mor gradient(Premium görüntü sağlıyor)*/
+    min-height: 100vh;/*En az tam ekran yüksekliği*/
+}
+
+.container{
+    max-width: 800px; /*En fazla 800px genişlik*/
+    margin: 0 auto; /*ortala*/
+    padding: 20px; /*Kenarlardan 20px boşluk*/
+}
+
+header{
+    text-align: center;
+    margin-bottom: 40px; /*Altta 40px boşluk bırak*/
+    color: white;
+}
+header h1{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow:2px 2px 4px rgba(0,0,0,0.3); /*Hafif opak bir gri renk kattı*/
+}
+
+header p{
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+main{
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+}
+
+.upload-section{
+    margin-bottom: 30px;
+}
+
+.upload-area{
+    border: 3px dashed rgb(124, 140, 243); /*Kesikli mavi çerçeve*/
+    border-radius: 10px; /*Köşeleri Yuvarlat*/
+    padding: 40px; /*İç taraftan çok boşluk bırak*/
+    text-align: center;
+    cursor: pointer; /*Üzerine gelince mouse al işaretine dönecek*/
+    background: #f8f9ff;
+}
+
+.upload-area:hover{
+    border-color: #764ba2;
+    background-color: #f0f2ff;
+}
+
+.upload-area.dragover {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+.upload-icon{
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/*Resim gösterme bolümü*/
+.preview-section{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.preview-section h3{
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+#imageCanvas{
+    border: 2px solid #ddd;/*İnce gri çerçeve*/
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/*Buton grupları*/
+.controls{
+
+    display:flex; /*yan yana diz butonları*/
+    gap: 15px; /*aralarına 15px boşluk bırak*/
+    justify-content: center;/*ortala*/
+    margin-bottom: 30px;
+}
+
+button{
+    padding: 12px 24px; /*alt 12 sol-sağ 24*/
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;/*Yumusak animasyon*/
+    font-weight: 600;/*Kalın yazı*/
+}
+
+#predictBtn{
+    background: linear-gradient(45deg,#28a745,#20c997);
+    color: white;
+}
+#predictBtn:hover:not(:disabled){
+    transform: translateY(-2px);/*2px yukarı oynat*/
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+/*Tahmin butonu disabled devre dışı iken */
+#predictBtn:disabled{
+    background: #ccc;/*Gri arkaplan*/
+    cursor: not-allowed;/*Yasak işareti*/
+}
+
+#clearBtn{ /*Temizle butonunu kırmızı yaptık*/ 
+    background: linear-gradient(45deg,#dc3545, #e83e8c);
+    color: white;
+}
+
+#clearBtn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+.result-section{
+    background: #f8f9fa;
+    padding:20px;/*iç boşluk*/
+    border-radius: 10px;
+    border-left: 5px solid #667eea; /*Bu çok güzel bir şey -> 
+                                        sol tarafta kalın mavi çizgi*/
+    /*Tahmin sonuçlarının gösterildiği bölüm*/
+}
+
+.result-section h3{
+    margin-bottom: 20px;
+    color: #667eea;
+}
+
+.top-prediction{
+    display: flex;/*yan yana diz*/
+    justify-content: space-between; /*iki uca yasla*/
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.class-name{
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:#333;
+}
+
+.confidence{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #28a745;
+    background: #e8f5e8;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.all-predictions{
+    display: grid;/* Izgara düzen */
+    gap: 8px; /* Aralarında 8px boşluk */
+}
+
+/*Her bir tahmin satırı*/
+.prediction-item{
+    display: flex; /*yan yana diz*/
+    justify-content: space-between; /*iki uca yasla*/
+    align-items: center; /*dikey ortala*/
+    padding: 8px 12px;
+    background: white;
+}
+
+/*Güvenilirlik çubuğğunun her bir dış çerçevesi*/
+.prediction-bar {
+    width: 100px;                /* 100px genişlik */
+    height: 6px;                 /* 6px yükseklik */
+    background: #e9ecef;         /* Açık gri arkaplan */
+    border-radius: 3px;          /* Yuvarlak köşeler */
+    overflow: hidden;            /* Taşanı gizle */
+}
+
+
+/* Güvenilirlik çubuğunun içi (dolum) */
+.prediction-fill{
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 3px; 
+    transition: width 0.5s ease;
+}
+
+/*Yükleme*/
+
+.loading{
+    text-align: center;
+    padding: 40px;
+}
+
+.spinner{
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px; 
+}
+
+/* ===== DÖNME ANİMASYONU ===== */
+@keyframes spin {
+    0% { transform: rotate(0deg); }     /* Başlangıç: 0 derece */
+    100% { transform: rotate(360deg); } /* Son: 360 derece (tam tur) */
+}
+/* AÇIKLAMA: Döner çarkın nasıl döneceğini tanımlar */
+
+footer{
+    text-align: center;
+    margin-top: 30px; /*üst boşluk*/
+    color: white;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+
+/*Mobil uyumluluğu*/
+
+@media (max-width:600px){
+    .container{
+        padding: 10px;
+    }
+    header h1{
+        font-size: 2rem;
+    }
+    main{
+        padding: 20px;
+    }
+    .controls{
+        flex-direction: column;
+    }
+}
