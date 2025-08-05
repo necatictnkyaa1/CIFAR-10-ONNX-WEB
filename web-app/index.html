@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIFAR10-CNN-Sınıflandırıcı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!--Ana kutu. İçeriği ortalayacağız ve genişliği kontrol edeceğiz-->
+
+        <header>
+            <h1>CIFAR10-CNN-Sınıflandırıcı</h1>
+            <p>Resminizi yükleyin ve AI tahminini görün!</p>
+        </header>
+        <main>
+            <div class="upload-section">
+                <!--Dosya yükleme bölümü-->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📸</div>
+                    <!--Resim yükleneceği için kamera emojisi-->
+                    <p>Resim dosyanızı buraya sürükleyin veya tıklayın</p>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                    <!--input alacağız file türünden ve sadece resim kabul edeceğiz ve gizli olacak-->
+
+                </div>
+            </div>
+            <div class="preview-section" id="previewSection" style="display: none">
+                <!--Yüklenen resmi göstereme bölümü başta gizli olacak sonra gösterilecek-->
+                <h3>Yüklenen Resim:</h3>
+                <canvas id="imageCanvas" width="224" height="224">
+                    <!--Canvası kullanacağız çünkü bu özellikleri var
+                    Görsel (resim) gösterebilir
+
+                    Piksel manipülasyonu yapabilir (örneğin: bir resmi alıp gri tonlara çevirmek gibi)
+
+                    ONNX gibi bir modelle tahmin yapılacak görüntüyü çizmek
+
+                    2D veya 3D grafik oluşturmak (örneğin oyunlar, görselleştirme)-->
+                </canvas>
+
+            </div>
+            <div class="controls">
+                <!--Butonların bulunduğu bölüm-->
+                <button id="predictBtn" disabled>🔮 Tahmin Et</button>
+                <!--Tahmin butonu - başta kapalı hale getirdik disabled ile-->
+                <button id="clearBtn">🗑️ Temizle</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <!--Sonuç bölümü-->
+                <h3>Tahmin Sonuçları:</h3>
+
+                <div class="prediction-result">
+                    <!--Ana tahmin sonucu kutusu-->
+                    <div class="top-prediction">
+                        <!--En yüksek tahmin-->
+                        <span class="class-name" id="top-class">-</span>
+                        <!--Tahmin edilen nesne adı- başta boş-->
+                        <span class="confidence" id="topConfidence">-%</span>
+                        <!--güven yüzdesi-->
+                    </div>
+                </div>
+                <div class="all-predictions" id="allPredictions"></div>
+                <!--Tüm tahminlerin listesi javascript ile doldurulacak-->
+            </div>
+            <div class="loading" id="loading" style="display: none;">
+                <!--Yükleme ekranı başta gizli-->
+                <div class="spinner"></div>
+                <!--Donen cark animasyonu-->
+                <p>Model Yükleniyor</p>
+            </div>
+
+        </main>
+        <footer>
+            <!-- Sayfanın alt kısmı -->
+            <p>CIFAR-10 sınıfları: Uçak, Araba, Kuş, Kedi, Geyik, Köpek, Kurbağa, At, Gemi, Kamyon</p>
+            
+        </footer>
+    </div>
+    <!-- JavaScript dosyaları sayfanın çalışması için gerekli -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/ort.min.js"></script>
+    <!-- AI kütüphanesi internettenindiriliyor -->
+    
+    <script src="script.js"></script>
+    <!-- Javascript kodumuz bu dosyada -->
+
+
+</body>
+</html>
